@@ -11,10 +11,20 @@
         <h1>Mon super blog !</h1>
     </header>
     <main>
-        <section>
-            <h2>PAGE ARTICLE</h2>
-           
-        </section>
+        <article>
+            <h2><?=$article['title'];?></h2>
+            <small>Créé le <?=(new DateTimeImmutable($article['createdAt']))->format('d/m/Y');?></small>
+            
+            <?php if ($article['image']): ?>
+                <img src="images/<?=$article['image'];?>" alt="">
+            <?php endif; ?>
+
+            <?php if ($article['abstract']): ?>
+                <p><?=$article['abstract'];?></p>
+            <?php endif; ?>
+
+            <p><?=$article['content'];?></p>
+        </article>
     </main>
 </body>
 </html>

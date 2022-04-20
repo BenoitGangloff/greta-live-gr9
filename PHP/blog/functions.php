@@ -90,3 +90,19 @@ function addArticle(string $title, string $abstract, string $content, string $im
     // On enregistre les articles à nouveau dans le fichier JSON
     saveJSON(FILENAME, $articles);
 }
+
+/**
+ * Récupère UN article à partir de son identifiant
+ * @param string $idArticle - L'identifiant de l'article à récupérer
+ * @return null|array - null si l'id n'existe pas, sinon retourne l'article
+ */
+function getOneArticle(string $idArticle): ?array
+{
+    $articles = getAllArticles();
+    foreach ($articles as $article) {
+        if ($article['id'] == $idArticle) {
+            return $article;
+        }
+    }
+    return null;
+}
