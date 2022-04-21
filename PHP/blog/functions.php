@@ -106,3 +106,35 @@ function getOneArticle(string $idArticle): ?array
     }
     return null;
 }
+
+/**
+ * Modifie un article
+ * @param string $title Le titre de l'article
+ * @param string $abstract Le résumé de l'article
+ * @param string $content Le contenu de l'article
+ * @param string $title Le nom du fichier image de l'article
+ * @return void
+ */
+function editArticle(string $title, string $abstract, string $content, string $image, string $idArticle)
+{
+    // On récupère tous les articles
+    $articles = getAllArticles();
+
+    // On parcours le tableau d'articles à la recherche de l'article à modifier
+    foreach ($articles as $index => $article) {
+
+        // Si l'id de l'article courant est le bon...
+        if ($article['id'] == $idArticle) {
+
+            // On modifie la case du tableau contenant l'article à modifier
+            $articles[$index]['title'] = $title;
+            $articles[$index]['abstract'] = $abstract;
+            $articles[$index]['content'] = $content;
+            $articles[$index]['image'] = $image;
+            break;
+        }
+    }
+
+    // On enregistre les articles à nouveau dans le fichier JSON
+    saveJSON(FILENAME, $articles);
+}
