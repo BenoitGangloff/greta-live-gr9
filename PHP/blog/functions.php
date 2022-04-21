@@ -138,3 +138,38 @@ function editArticle(string $title, string $abstract, string $content, string $i
     // On enregistre les articles à nouveau dans le fichier JSON
     saveJSON(FILENAME, $articles);
 }
+
+/**
+ * Supprime un article à partir de son identifiant
+ * @param string $idArticle - L'identifiant de l'article à supprimer
+ */
+function deleteArticle(string $idArticle)
+{
+    // On récupère tous les articles
+    $articles = getAllArticles();
+
+    // Initialisation d'une variable qui stockera l'indice de l'élément à supprimer
+    $indexToDelete = null;
+
+    // On parcours le tableau d'articles à la recherche de l'article à supprimer
+    foreach ($articles as $index => $article) {
+        
+        // Si l'id de l'article courant est le bon...
+        if ($article['id'] == $idArticle) {
+
+            // Je stocke l'indice de l'élément à supprimer
+            $indexToDelete = $index;
+            break;
+        }
+    }
+
+    // Si j'ai bien trouvé l'élémentà supprimer...
+    if (!is_null($indexToDelete)) {
+
+        // ... je le supprime !
+        array_splice($articles, $indexToDelete, 1);
+    }
+    
+    // On enregistre les articles à nouveau dans le fichier JSON
+    saveJSON(FILENAME, $articles);
+}
