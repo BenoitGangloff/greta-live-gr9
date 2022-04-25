@@ -1,7 +1,7 @@
 <?php 
 
 // Constantes
-const FILENAME = 'articles.json';
+const FILENAME = '../data/articles.json';
 
 
 //////////////// FONCTIONS ////////////////

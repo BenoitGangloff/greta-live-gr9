@@ -1,9 +1,11 @@
-<?php 
+<?php
 
 // Inclusion des dépendances
-include 'functions.php';
+include '../lib/functions.php';
 
-// Validation et récupération de l'id de l'article à supprimer dans l'URL
+// Traitements 
+
+// Validation du paramètre id de l'URL
 if (!array_key_exists('id', $_GET) || !$_GET['id']) {
 
     http_response_code(404);
@@ -25,9 +27,6 @@ if (!$article) {
     exit; // Si pas d'article => message d'erreur et on arrête tout ! 
 }
 
-// Suppression de l'article
-deleteArticle($idArticle);
-
-// Redirection vers le dashboard admin
-header('Location: admin.php');
-exit;
+// Affichage : inclusion du fichier de template
+$template = 'article';
+include '../templates/base.phtml';

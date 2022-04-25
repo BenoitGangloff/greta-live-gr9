@@ -1,7 +1,7 @@
 <?php
 
 // Inclusion des dépendances
-include 'functions.php';
+include '../lib/functions.php';
 
 // Traitements
 
@@ -68,4 +68,5 @@ if (!empty($_POST)) {
 }
 
 // Affichage : inclusion du fichier de template
-include 'edit_article.phtml';
+$template = 'edit_article';
+include '../templates/base_admin.phtml';

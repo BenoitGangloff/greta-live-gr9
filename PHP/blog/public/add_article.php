@@ -1,7 +1,7 @@
 <?php 
 
 // Inclusion des dépendances 
-include 'functions.php';
+include '../lib/functions.php';
 
 // Initialisations
 $errors = [];
@@ -31,10 +31,11 @@ if (!empty($_POST)) {
         addArticle($title, $abstract, $content, $image);
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
-        header('Location: confirmation_ajout.html');
+        header('Location: admin.php');
         exit;
     }
 }
 
 // Inclusion du template
-include 'add_article.phtml';
+$template = 'add_article';
+include '../templates/base_admin.phtml';
