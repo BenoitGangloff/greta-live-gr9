@@ -204,10 +204,11 @@ function getAllUsers(): array
 }
 
 /**
- * Est-ce qu'un utilisateur existe déjà ?
+ * Retourne un utilisateur à partir de son email
  * @param string $email - L'email de l'utilisateur qu'on cherche
+ * @return bool|array - false si l'utilisateur n'est pas trouvé, sinon le tableau associatif contenant les données de l'utilisateur
  */
-function userExists(string $email): bool 
+function getUserByEmail(string $email) 
 {
     // On récupère le contenu de fichier JSON
     $users = loadJSON(USERS_FILENAME);
@@ -222,7 +223,7 @@ function userExists(string $email): bool
 
         // Si l'un des utilisateur possède l'email qu'on teste, on retourne true
         if ($user['email'] == $email) {
-            return true;
+            return $user;
         }
     }
 

@@ -34,7 +34,7 @@ if (!empty($_POST)) {
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'Email invalide';
     }
-    elseif (userExists($email)) {
+    elseif (getUserByEmail($email)) {
         $errors['email'] = 'Un compte existe déjà avec cet email';
     }
 
