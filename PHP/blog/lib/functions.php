@@ -1,10 +1,12 @@
 <?php 
 
 // Constantes
-const FILENAME = '../data/articles.json';
+const ARTICLES_FILENAME = '../data/articles.json';
+const USERS_FILENAME = '../data/users.json'; 
 
-
-//////////////// FONCTIONS ////////////////
+/////////////////////////////////////////
+///////// FONCTIONS UTILITAIRES /////////
+/////////////////////////////////////////
 
 /**
  * Récupère des données stockées dans un fichier JSON
@@ -40,6 +42,11 @@ function saveJSON(string $filepath, $data)
     file_put_contents($filepath, $jsonData);
 }
 
+
+/////////////////////////////////////////
+/////////////// ARTICLES ////////////////
+/////////////////////////////////////////
+
 /**
  * Récupère l'intégralité des articles ou un tableau vide
  * @return array - Le tableau d'articles
@@ -47,7 +54,7 @@ function saveJSON(string $filepath, $data)
 function getAllArticles(): array
 {
     // On récupère le contenu de fichier JSON
-    $articles = loadJSON(FILENAME);
+    $articles = loadJSON(ARTICLES_FILENAME);
 
     // Si on ne récupère rien (fichier inexistant ou vide)
     if ($articles == false) {
@@ -88,7 +95,7 @@ function addArticle(string $title, string $abstract, string $content, string $im
     $articles[] = $article;
 
     // On enregistre les articles à nouveau dans le fichier JSON
-    saveJSON(FILENAME, $articles);
+    saveJSON(ARTICLES_FILENAME, $articles);
 }
 
 /**
@@ -136,7 +143,7 @@ function editArticle(string $title, string $abstract, string $content, string $i
     }
 
     // On enregistre les articles à nouveau dans le fichier JSON
-    saveJSON(FILENAME, $articles);
+    saveJSON(ARTICLES_FILENAME, $articles);
 }
 
 /**
@@ -171,5 +178,87 @@ function deleteArticle(string $idArticle)
     }
     
     // On enregistre les articles à nouveau dans le fichier JSON
-    saveJSON(FILENAME, $articles);
+    saveJSON(ARTICLES_FILENAME, $articles);
+}
+
+/////////////////////////////////////////
+///////////////// USERS /////////////////
+/////////////////////////////////////////
+
+/**
+ * Récupère l'intégralité des utilisateurs ou un tableau vide
+ * @return array - Le tableau de users
+ */
+function getAllUsers(): array
+{
+    // On récupère le contenu de fichier JSON
+    $users = loadJSON(USERS_FILENAME);
+
+    // Si on ne récupère rien (fichier inexistant ou vide)
+    if (!$users) {
+        return [];
+    }
+
+    // Sinon on retourne directement notre tableau de users
+    return $users;
+}
+
+/**
+ * Est-ce qu'un utilisateur existe déjà ?
+ * @param string $email - L'email de l'utilisateur qu'on cherche
+ */
+function userExists(string $email): bool 
+{
+    // On récupère le contenu de fichier JSON
+    $users = loadJSON(USERS_FILENAME);
+
+    // Si le fichier n'existe pas ou est vide, forcément l'utilisateur n'existe pas
+    if (!$users) {
+        return false;
+    }
+
+    // On parcours le tableau d'utilisateurs...
+    foreach ($users as $user) {
+
+        // Si l'un des utilisateur possède l'email qu'on teste, on retourne true
+        if ($user['email'] == $email) {
+            return true;
+        }
+    }
+
+    // Si on a parcouru tout le tableau sans trouver l'utilisateur, c'est qu'il n'est pas présent
+    return false;
+}
+
+/**
+ * Ajoute un user
+ * @param string $firstname Le prénom de l'utilisateur
+ * @param string $lastname Le nom de l'utilisateur
+ * @param string $email L'email de l'utilisateur
+ * @param string $hashedpassword Le mot de passe hashé de l'utilisateur
+ * @return void
+ */
+function addUser(string $firstname, string $lastname, string $email, string $hashedpassword)
+{
+    // On commence par récupérer tous les articles
+    $users = getAllUsers();
+
+    // Création de la date de création de l'article (date du jour)
+    $today = new DateTimeImmutable();
+
+    // On regroupe les informations du nouvel article dans un tableau associatif
+    $user = [
+        'id' => sha1(uniqid(rand(), true)),
+        'firstname' => $firstname,
+        'lastname' => $lastname,
+        'email' => $email,
+        'hash' => $hashedpassword,
+        'createdAt' => $today->format('Y-m-d')
+    ];
+
+    // On ajoute le nouvel article au tableau d'articles
+    $users[] = $user;
+
+    // On enregistre les articles à nouveau dans le fichier JSON
+    saveJSON(USERS_FILENAME, $users);
 }
