@@ -48,8 +48,11 @@ if (!empty($_POST)) {
     // Si tout est OK (pas d'erreurs)...
     if (empty($errors)) {
 
+        // Hashage du mot de passe
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
         // On enregistre l'article
-        addUser($firstname, $lastname, $email, $password);
+        addUser($firstname, $lastname, $email, $hash);
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
         header('Location: admin.php');
@@ -57,6 +60,6 @@ if (!empty($_POST)) {
     }
 }
 
-
 // Inclusion du template
-include "../templates/signup.phtml";
+$template = 'signup';
+include "../templates/base.phtml";

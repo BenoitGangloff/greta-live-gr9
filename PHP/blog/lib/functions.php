@@ -236,10 +236,10 @@ function getUserByEmail(string $email)
  * @param string $firstname Le prénom de l'utilisateur
  * @param string $lastname Le nom de l'utilisateur
  * @param string $email L'email de l'utilisateur
- * @param string $hashedpassword Le mot de passe hashé de l'utilisateur
+ * @param string $hash Le mot de passe hashé de l'utilisateur
  * @return void
  */
-function addUser(string $firstname, string $lastname, string $email, string $hashedpassword)
+function addUser(string $firstname, string $lastname, string $email, string $hash)
 {
     // On commence par récupérer tous les articles
     $users = getAllUsers();
@@ -253,7 +253,7 @@ function addUser(string $firstname, string $lastname, string $email, string $has
         'firstname' => $firstname,
         'lastname' => $lastname,
         'email' => $email,
-        'hash' => $hashedpassword,
+        'hash' => $hash,
         'createdAt' => $today->format('Y-m-d')
     ];
 
@@ -262,4 +262,29 @@ function addUser(string $firstname, string $lastname, string $email, string $has
 
     // On enregistre les articles à nouveau dans le fichier JSON
     saveJSON(USERS_FILENAME, $users);
+}
+
+/**
+ * Vérifie les identifiants d el'utilisateur
+ * @param string $email L'email rentré par l'utilisateur
+ * @param string $password Le mot de passe rentré par l'utilisateur
+ */
+function checkUser(string $email, string $password)
+{
+    // On récupère l'utilisateur à partir de son email
+    $user = getUserByEmail($email);
+
+    // Si on trouve bien un utilisateur...
+    if ($user) {
+
+        // On vérifie son mot de passe
+        if (password_verify($password, $user['hash'])) {
+
+            // Tout est ok, on retourne l'utilisateur
+            return $user;
+        }
+    }
+
+    // Si l'email ou le mot de passe est incorrect...
+    return false;
 }
