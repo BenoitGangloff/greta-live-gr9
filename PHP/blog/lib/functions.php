@@ -337,3 +337,55 @@ function logout()
         session_destroy();
     }
 }
+
+/**
+ * Retourne l'id de l'utilisateur connecté
+ */
+function getUserId()
+{
+    // Si l'utilisateur est connecté...
+    if (!isConnected()) {
+        return null;
+    }
+
+    return $_SESSION['user']['id'];
+}
+
+/**
+ * Retourne le prénom de l'utilisateur connecté
+ */
+function getUserFirstname()
+{
+    // Si l'utilisateur est connecté...
+    if (!isConnected()) {
+        return null;
+    }
+
+    return $_SESSION['user']['firstname'];
+}
+
+/**
+ * Retourne le nom de l'utilisateur connecté
+ */
+function getUserLastname()
+{
+    // Si l'utilisateur est connecté...
+    if (!isConnected()) {
+        return null;
+    }
+
+    return $_SESSION['user']['lastname'];
+}
+
+/**
+ * Retourne l'email de l'utilisateur connecté
+ */
+function getUserEmail()
+{
+    // Si l'utilisateur est connecté...
+    if (!isConnected()) {
+        return null;
+    }
+
+    return $_SESSION['user']['email'];
+}
