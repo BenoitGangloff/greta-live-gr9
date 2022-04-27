@@ -288,3 +288,22 @@ function checkUser(string $email, string $password)
     // Si l'email ou le mot de passe est incorrect...
     return false;
 }
+
+/**
+ * Enregistre les données d el'utilisateur en session
+ */
+function registerUser(string $id, string $firstname, string $lastname, string $email)
+{
+    // On commence par vérifier qu'une session est bien démarrée
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Puis on enregistre les données de l'utilisateur en session
+    $_SESSION['user'] = [
+        'id' => $id,
+        'firstname' => $firstname,
+        'lastname' => $lastname,
+        'email' => $email
+    ];
+}
