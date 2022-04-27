@@ -307,3 +307,33 @@ function registerUser(string $id, string $firstname, string $lastname, string $e
         'email' => $email
     ];
 }
+
+/**
+ * Détermine si l'utilisateur est connecté ou non
+ * @return bool - true si l'utilisateur est connecté, false sinon
+ */
+function isConnected(): bool
+{
+    // On commence par vérifier qu'une session est bien démarrée
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    return array_key_exists('user', $_SESSION) && isset($_SESSION['user']);
+}
+
+/**
+ * Déconnecte l'utilisateur
+ */
+function logout()
+{
+    // Si l'utilisateur est connecté...
+    if (isConnected()) {
+
+        // On efface nos données en session
+        $_SESSION['user'] = null;
+
+        // On ferme la session 
+        session_destroy();
+    }
+}

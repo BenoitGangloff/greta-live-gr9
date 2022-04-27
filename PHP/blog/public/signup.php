@@ -1,5 +1,8 @@
 <?php 
 
+// On démarre la session pour être certain qu'elle est démarrée
+session_start();
+
 // Inclusion des dépendances
 include '../lib/functions.php';
 
