@@ -13,10 +13,10 @@ $errors = [];
 if (!empty($_POST)) {
 
     // On récupère les données du formulaire
-    $title = trim($_POST['title']);
-    $abstract = trim($_POST['abstract']);
-    $content = trim($_POST['content']);
-    $image = trim($_POST['image']);
+    $title = strip_tags(trim($_POST['title']));
+    $abstract = strip_tags(trim($_POST['abstract']));
+    $content = strip_tags(trim($_POST['content'])); // @TODO si éditeur WYSIWYG => autoriser certaines balises HTML
+    $image = strip_tags(trim($_POST['image'])); // @TODO remplacer le champ type text par un champ d'upload de fichier
 
     // On valide les données (titre et contenu obligatoires)
     if (!$title) {

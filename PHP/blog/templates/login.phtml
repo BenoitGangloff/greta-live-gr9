@@ -1,10 +1,10 @@
 <form action="login.php" method="POST">
     <?php if (isset($error)): ?>
-        <p class="error"><?=$error;?></p>
+        <p class="error"><?=htmlspecialchars($error);?></p>
     <?php endif; ?>
     <div>
         <label for="email">Email</label>
-        <input type="text" id="email" name="email" value="<?=$email;?>">
+        <input type="text" id="email" name="email" value="<?=htmlspecialchars($email);?>">
     </div>
     <div>
         <label for="password">Mot de passe</label>

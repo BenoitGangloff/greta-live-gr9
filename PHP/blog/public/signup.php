@@ -16,9 +16,9 @@ $email = '';
 if (!empty($_POST)) {
 
     // On récupère les données du formulaire
-    $firstname = trim($_POST['firstname']);
-    $lastname = trim($_POST['lastname']);
-    $email = trim($_POST['email']);
+    $firstname = strip_tags(trim($_POST['firstname']));
+    $lastname = strip_tags(trim($_POST['lastname']));
+    $email = strip_tags(trim($_POST['email']));
     $password = $_POST['password'];
     $passwordConfirm = $_POST['password-confirm'];
 

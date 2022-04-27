@@ -44,10 +44,10 @@ $image = $article['image'];
 if (!empty($_POST)) {
 
     // On récupère les données du formulaire
-    $title = trim($_POST['title']);
-    $abstract = trim($_POST['abstract']);
-    $content = trim($_POST['content']);
-    $image = trim($_POST['image']);
+    $title = strip_tags(trim($_POST['title']));
+    $abstract = strip_tags(trim($_POST['abstract']));
+    $content = strip_tags(trim($_POST['content']));
+    $image = strip_tags(trim($_POST['image']));
 
     // On valide les données (titre et contenu obligatoires)
     if (!$title) {

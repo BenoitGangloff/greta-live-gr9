@@ -5,7 +5,7 @@
             <label for="title">Titre de l'article</label>
             <input type="text" id="title" name="title" value="<?=$title;?>">
             <?php if (isset($errors['title'])): ?>
-                <p class="error"><?=$errors['title'];?></p>
+                <p class="error"><?=htmlspecialchars($errors['title']);?></p>
             <?php endif; ?>
         </div>
         <div>
@@ -16,12 +16,12 @@
             <label for="content">Contenu de l'article</label>
             <textarea id="content" name="content"><?=$content;?></textarea>
             <?php if (isset($errors['content'])): ?>
-                <p class="error"><?=$errors['content'];?></p>
+                <p class="error"><?=htmlspecialchars($errors['content']);?></p>
             <?php endif; ?>
         </div>
         <div>
             <label for="image">Image</label>
-            <input type="text" id="image" name="image" value="<?=$image;?>">
+            <input type="text" id="image" name="image" value="<?=htmlspecialchars($image);?>">
         </div>
         <input type="submit" value="Enregistrer">
     </fieldset>

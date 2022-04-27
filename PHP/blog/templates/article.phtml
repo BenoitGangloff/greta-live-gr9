@@ -1,15 +1,15 @@
 <article>
-    <h2><?=$article['title'];?></h2>
+    <h2><?=htmlspecialchars($article['title']);?></h2>
     <small>Créé le <?=(new DateTimeImmutable($article['createdAt']))->format('d/m/Y');?></small>
     
     <?php if ($article['image']): ?>
-        <img src="images/<?=$article['image'];?>" alt="">
+        <img src="images/<?=htmlspecialchars($article['image']);?>" alt="">
     <?php endif; ?>
 
     <?php if ($article['abstract']): ?>
-        <p><?=$article['abstract'];?></p>
+        <p><?=htmlspecialchars($article['abstract']);?></p>
     <?php endif; ?>
 
-    <p><?=$article['content'];?></p>
+    <p><?=htmlspecialchars($article['content']);?></p>
 </article>
     
