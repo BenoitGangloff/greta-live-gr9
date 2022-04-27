@@ -3,6 +3,8 @@
 // Constantes
 const ARTICLES_FILENAME = '../data/articles.json';
 const USERS_FILENAME = '../data/users.json'; 
+const ROLE_USER = 'USER';
+const ROLE_ADMIN = 'ADMIN';
 
 /////////////////////////////////////////
 ///////// FONCTIONS UTILITAIRES /////////
@@ -254,6 +256,7 @@ function addUser(string $firstname, string $lastname, string $email, string $has
         'lastname' => $lastname,
         'email' => $email,
         'hash' => $hash,
+        'role' => ROLE_USER,
         'createdAt' => $today->format('Y-m-d')
     ];
 
@@ -292,7 +295,7 @@ function checkUser(string $email, string $password)
 /**
  * Enregistre les données d el'utilisateur en session
  */
-function registerUser(string $id, string $firstname, string $lastname, string $email)
+function registerUser(string $id, string $firstname, string $lastname, string $email, string $role)
 {
     // On commence par vérifier qu'une session est bien démarrée
     if (session_status() == PHP_SESSION_NONE) {
@@ -304,7 +307,8 @@ function registerUser(string $id, string $firstname, string $lastname, string $e
         'id' => $id,
         'firstname' => $firstname,
         'lastname' => $lastname,
-        'email' => $email
+        'email' => $email,
+        'role' => $role
     ];
 }
 
@@ -388,4 +392,29 @@ function getUserEmail()
     }
 
     return $_SESSION['user']['email'];
+}
+
+/**
+ * Retourne le rôle de l'utilisateur connecté
+ */
+function getUserRole()
+{
+    // Si l'utilisateur est connecté...
+    if (!isConnected()) {
+        return null;
+    }
+
+    return $_SESSION['user']['role'];
+}
+
+/**
+ * Vérifie si l'utilisateur possède un rôle particulier
+ */
+function hasRole(string $role)
+{
+    if (!isConnected()) {
+        return false;
+    }
+
+    return getUserRole() == $role;
 }

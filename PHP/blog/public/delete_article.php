@@ -6,6 +6,13 @@ session_start();
 // Inclusion des dépendances
 include '../lib/functions.php';
 
+// Vérification du rôle
+if (!hasRole(ROLE_ADMIN)) {
+    http_response_code(403);
+    echo 'Accès interdit';
+    exit;
+}
+
 // Validation et récupération de l'id de l'article à supprimer dans l'URL
 if (!array_key_exists('id', $_GET) || !$_GET['id']) {
 

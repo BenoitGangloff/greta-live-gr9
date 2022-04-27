@@ -6,6 +6,13 @@ session_start();
 // Inclusion des dépendances
 include '../lib/functions.php';
 
+// Vérification du rôle
+if (!hasRole(ROLE_ADMIN)) {
+    http_response_code(403);
+    echo 'Accès interdit';
+    exit;
+}
+
 // Traitements
 
 /////////////////////

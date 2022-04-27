@@ -58,7 +58,7 @@ if (!empty($_POST)) {
         addUser($firstname, $lastname, $email, $hash);
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
-        header('Location: admin.php');
+        header('Location: home.php');
         exit;
     }
 }
