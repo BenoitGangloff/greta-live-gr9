@@ -42,20 +42,26 @@ function showError(error)
  * @param {*} longitude 
  * @returns 
  */
-function getWeather(latitude, longitude)
+async function getWeather(latitude, longitude)
 {
-    return new Promise((resolve) => {
-        const API_TOKEN = 'acaeeb66204c112d0b0a317f12d542d8ef535aae57ec50c4482c03cb21e51331';
-        const BASE_URL = 'https://api.meteo-concept.com/api';
-        const endpoint = '/forecast/daily';
-        const url = BASE_URL + endpoint + `?token=${API_TOKEN}&latlng=${latitude},${longitude}`;
+    // Construction de l'URL de l'API météo-concept que l'on va interroger 
+    const API_TOKEN = 'acaeeb66204c112d0b0a317f12d542d8ef535aae57ec50c4482c03cb21e51331'; // le TOKEN permet de s'identifier
+    const BASE_URL = 'https://api.meteo-concept.com/api'; // URL de base de l'API
+    const endpoint = '/forecast/daily'; // le "endpoint" qu'on souhaite appeler (les données qui nous intéresse)
+    const url = BASE_URL + endpoint + `?token=${API_TOKEN}&latlng=${latitude},${longitude}`;
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                resolve(data);  
-            });
-    });
+    // On envoie la requête AJAX
+    const response = await fetch(url);
+    return await response.json();
+}
+
+async function init()
+{
+    const position = await getUserLocation();
+    displayCoords(position);
+    const weather = await getWeather(position);
+    console.log(weather);
+    // @TODO afficher les informations relatives à la météo
 }
 
 ////////////////////////////////////////////
@@ -65,12 +71,20 @@ function getWeather(latitude, longitude)
 // Conteneur pour les messages d'erreur
 const errorContainer = document.getElementById('error-message');
 
-getUserLocation()
-    .then(position => {
-        displayCoords(position);
-        return getWeather(position.coords.latitude, position.coords.longitude)
-    })
-    .then(weatherData => {
-        console.log(weatherData);
-    })
-    .catch(showError);
+// getUserLocation()
+//     .then(position => {
+//         displayCoords(position);
+//         return getWeather(position.coords.latitude, position.coords.longitude)
+//     })
+//     .then(weatherData => {
+//         console.log(weatherData);
+//     })
+//     .catch(showError);
+
+try {
+    init();
+}
+catch(error) {
+    showError(error);
+    console.log(error);
+}
