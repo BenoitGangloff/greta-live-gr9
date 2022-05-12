@@ -30,6 +30,11 @@ for (const button of deleteButtons) {
             const response = await fetch(urlAjax);
             const data = await response.json();
 
+            /**
+             * Je récupère ici les données envoyées par le serveur en PHP avec : echo json_encode(['id' => $idArticle]);
+             * Je vais donc récupérer un objet avec la propriété id qui contient l'id de l'article supprimé
+             */
+
             // 3°) Lors de la réception de la réponse, on construit l'id de l'élément <tr> à supprimer et on le supprime
             const idTr = `article-${data.id}`; 
             document.getElementById(idTr).remove();
