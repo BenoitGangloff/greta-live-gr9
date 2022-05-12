@@ -59,7 +59,7 @@ async function init()
 {
     const position = await getUserLocation();
     displayCoords(position);
-    const weather = await getWeather(position);
+    const weather = await getWeather(position.coords.latitude, position.coords.longitude);
     console.log(weather);
     // @TODO afficher les informations relatives à la météo
 }
