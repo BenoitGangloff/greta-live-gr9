@@ -23,6 +23,11 @@ class Rectangle extends Shape {
      */
     public function __construct()
     {
+        /**
+         * Appel explicite du constructeur du parent (Shape) qui était écrasé (surchargé) par celui de l'enfant (Rectangle)
+         */
+        parent::__construct();
+
         $this->width = 10;
         $this->height = 5;
     }

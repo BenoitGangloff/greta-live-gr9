@@ -6,6 +6,8 @@ class Polygon extends Shape {
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->points = [];
     }
 

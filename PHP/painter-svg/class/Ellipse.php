@@ -17,6 +17,8 @@ class Ellipse extends Shape {
      */
     public function __construct()
     {
+        parent::__construct();
+        
         $this->xRadius = 10;
         $this->yRadius = 5;
     }
