@@ -1,16 +1,18 @@
 <?php
 
-class Rectangle {
+/**
+ * La classe Rectangle "hérite" ou "étends" de la classe Shape
+ * Un rectangle est une sous-catégorie de la classe "forme" : un rectangle EST une forme géométrique
+ * La classe Rectangle va hériter des propriétés et des méthodes de la classe Shape (son parent)
+ * /!\ qui ont la visibilité "public" ou "protected"
+ */
+class Rectangle extends Shape {
 
     /**
      * Déclaration des propriétés
      */
-    private int $x;
-    private int $y;
     private int $width;
     private int $height;
-    private string $color;
-    private float $opacity;
 
     /**
      * Déclaration du constructeur
@@ -21,33 +23,17 @@ class Rectangle {
      */
     public function __construct()
     {
-        $this->x = 0;
-        $this->y = 0;
         $this->width = 10;
         $this->height = 5;
-        $this->color = 'grey';
-        $this->opacity = 1;
     }
 
     /**
      * Déclaration des autres méthodes
      */
-    public function setLocation(int $x, int $y)
-    {
-        $this->x = $x;
-        $this->y = $y;
-    }
-
     public function setSize(int $width, int $height)
     {
         $this->width = $width;
         $this->height = $height;
-    }
-
-    public function setFill(string $color, float $opacity)
-    {
-        $this->color = $color;
-        $this->opacity = $opacity;
     }
 
     function draw():string
