@@ -69,6 +69,8 @@ foreach ($shapes as $shape) {
 
 $svg .= '</svg>';
 
+// Si on veut compter le nombre de forme créées
+var_dump(Shape::getCount());
 
 // Inclusion du template
 include 'index.phtml';

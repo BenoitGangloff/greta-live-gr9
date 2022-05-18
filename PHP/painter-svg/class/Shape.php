@@ -10,6 +10,8 @@ abstract class Shape {
     protected string $color;
     protected float $opacity;
 
+    static private int $count = 0;
+
     /**
      * Déclaration d'une méthode abstraite draw() pour obliger les classes enfants à l'implémenter
      */
@@ -23,6 +25,8 @@ abstract class Shape {
         $this->location = new Point();
         $this->color = 'grey';
         $this->opacity = 1;
+
+        self::$count++;
     }
 
     /**
@@ -37,5 +41,10 @@ abstract class Shape {
     {
         $this->color = $color;
         $this->opacity = $opacity;
+    }
+
+    static public function getCount(): int
+    {
+        return self::$count;
     }
 }
