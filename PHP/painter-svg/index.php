@@ -5,14 +5,10 @@ declare(strict_types=1);
 
 // Inclusion des dépendances
 include 'functions.php';
-include 'class/Point.php';
-include 'class/Shape.php';
-include 'class/Rectangle.php';
-include 'class/Ellipse.php';
-include 'class/Polygon.php';
-include 'class/Square.php';
-include 'class/Circle.php';
-include 'class/Triangle.php';
+include 'class/Autoloader.php';
+
+// Autoloading
+Autoloader::register();
 
 // Création d'un tableau dans lequel on va ranger tous nos objets de formes
 $shapes = [];
