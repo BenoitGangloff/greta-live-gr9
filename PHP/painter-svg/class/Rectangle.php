@@ -43,6 +43,6 @@ class Rectangle extends Shape {
 
     function draw():string
     {
-        return '<rect x="'.$this->x.'" y="'.$this->y.'" width="'.$this->width.'" height="'.$this->height.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
+        return '<rect x="'.$this->location->getX().'" y="'.$this->location->getY().'" width="'.$this->width.'" height="'.$this->height.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
     }
 }

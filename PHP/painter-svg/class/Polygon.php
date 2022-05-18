@@ -11,12 +11,7 @@ class Polygon extends Shape {
         $this->points = [];
     }
 
-    // public function setPoints(array $points)
-    // {
-    //     $this->points = $points;
-    // }
-
-    public function setPoints(int ...$points)
+    public function setPoints(int ...$points /* array $points */)
     {
         $this->points = $points;
     }

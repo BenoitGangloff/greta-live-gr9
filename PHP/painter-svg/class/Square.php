@@ -6,6 +6,7 @@ class Square extends Shape {
 
     public function __construct()
     {
+        parent::__construct();
         $this->size = 10;
     }
 
@@ -16,6 +17,6 @@ class Square extends Shape {
 
     function draw():string
     {
-        return '<rect x="'.$this->x.'" y="'.$this->y.'" width="'.$this->size.'" height="'.$this->size.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
+        return '<rect x="'.$this->location->getX().'" y="'.$this->location->getY().'" width="'.$this->size.'" height="'.$this->size.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
     }
 }

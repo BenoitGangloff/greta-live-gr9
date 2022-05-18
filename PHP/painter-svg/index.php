@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 // Inclusion des dépendances
 include 'functions.php';
+include 'class/Point.php';
 include 'class/Shape.php';
 include 'class/Rectangle.php';
 include 'class/Ellipse.php';

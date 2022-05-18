@@ -6,8 +6,7 @@
  */
 abstract class Shape {
 
-    protected int $x;
-    protected int $y;
+    protected Point $location;
     protected string $color;
     protected float $opacity;
 
@@ -21,8 +20,7 @@ abstract class Shape {
      */
     public function __construct()
     {
-        $this->x = 0;
-        $this->y = 0;
+        $this->location = new Point();
         $this->color = 'grey';
         $this->opacity = 1;
     }
@@ -32,8 +30,7 @@ abstract class Shape {
      */
     public function setLocation(int $x, int $y)
     {
-        $this->x = $x;
-        $this->y = $y;
+        $this->location->setXY($x, $y);
     }
 
     public function setFill(string $color, float $opacity)

@@ -6,6 +6,7 @@ class Circle extends Shape {
 
     public function __construct()
     {
+        parent::__construct();
         $this->radius = 10;
     }
 
@@ -16,6 +17,6 @@ class Circle extends Shape {
 
     function draw():string
     {
-        return '<circle cx="'.$this->x.'" cy="'.$this->y.'" r="'.$this->radius.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
+        return '<circle cx="'.$this->location->getX().'" cy="'.$this->location->getY().'" r="'.$this->radius.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
     }
 }

@@ -34,6 +34,6 @@ class Ellipse extends Shape {
 
     function draw():string
     {
-        return '<ellipse cx="'.$this->x.'" cy="'.$this->y.'" rx="'.$this->xRadius.'" ry="'.$this->yRadius.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
+        return '<ellipse cx="'.$this->location->getX().'" cy="'.$this->location->getY().'" rx="'.$this->xRadius.'" ry="'.$this->yRadius.'" fill="'.$this->color.'" opacity="'.$this->opacity.'" />';
     }
 }
