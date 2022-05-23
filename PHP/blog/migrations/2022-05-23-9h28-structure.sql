@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : lun. 23 mai 2022 à 07:41
+-- Généré le : lun. 23 mai 2022 à 09:20
 -- Version du serveur : 5.7.24
 -- Version de PHP : 8.1.6
 
@@ -35,6 +35,7 @@ CREATE TABLE `article` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `abstract` varchar(1000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `fkCategoryId` int(11) NOT NULL,
   `fkUserId` int(11) NOT NULL
