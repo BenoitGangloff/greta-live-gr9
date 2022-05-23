@@ -4,6 +4,7 @@
 session_start();
 
 // Inclusion des dépendances
+include '../app/config.php';
 include '../lib/functions.php';
 
 // Traitements : récupérer les articles

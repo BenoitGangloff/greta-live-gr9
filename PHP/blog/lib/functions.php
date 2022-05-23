@@ -49,21 +49,60 @@ function saveJSON(string $filepath, $data)
 /////////////// ARTICLES ////////////////
 /////////////////////////////////////////
 
+// /**
+//  * Récupère l'intégralité des articles ou un tableau vide
+//  * @return array - Le tableau d'articles
+//  */
+// function getAllArticles(): array
+// {
+//     // On récupère le contenu de fichier JSON
+//     $articles = loadJSON(ARTICLES_FILENAME);
+
+//     // Si on ne récupère rien (fichier inexistant ou vide)
+//     if ($articles == false) {
+//         return [];
+//     }
+
+//     // Sinon on retourne directement notre tableau d'articles
+//     return $articles;
+// }
+
+/**
+ * Création d'une connexion à la base de données
+ */
+function getPDOConnection()
+{
+    // Connexion à la base de données
+    $dsn = 'mysql:dbname='.DB_NAME.';host='.DB_HOST.';charset=utf8'; // DSN : Data Source Name (informations de connexion à la BDD)
+    $user = DB_USER; // Utilisateur
+    $password = DB_PASS; // Mot de passe
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Pour afficher les erreurs SQL
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // Mode de récupération des résultats
+    ];
+
+    $pdo = new PDO($dsn, $user, $password, $options); // Création d'un objet de la classe PDO
+
+    return $pdo;
+}
+
 /**
  * Récupère l'intégralité des articles ou un tableau vide
  * @return array - Le tableau d'articles
  */
 function getAllArticles(): array
 {
-    // On récupère le contenu de fichier JSON
-    $articles = loadJSON(ARTICLES_FILENAME);
+    // Connexion à la base de données
+    $pdo = getPDOConnection();
 
-    // Si on ne récupère rien (fichier inexistant ou vide)
-    if ($articles == false) {
-        return [];
-    }
+    // Exécution de la requête de sélection des articles
+    $sql = 'SELECT * FROM article';
+    $pdoStatement = $pdo->query($sql);
 
-    // Sinon on retourne directement notre tableau d'articles
+    // Récupération des résultats de la requête et retour
+    $articles = $pdoStatement->fetchAll();
+
+    // On retourne les articles sélectionnés
     return $articles;
 }
 
