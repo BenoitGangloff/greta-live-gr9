@@ -4,12 +4,13 @@
 session_start();
 
 // Inclusion des dépendances
+include '../app/config.php';
 include '../lib/functions.php';
 
 // Traitements 
 
 // Validation du paramètre id de l'URL
-if (!array_key_exists('id', $_GET) || !$_GET['id']) {
+if (!array_key_exists('id', $_GET) || !$_GET['id'] || !ctype_digit($_GET['id'])) {
 
     http_response_code(404);
     echo 'Article introuvable';
@@ -17,7 +18,7 @@ if (!array_key_exists('id', $_GET) || !$_GET['id']) {
 }
 
 // On récupère l'id de l'article à afficher depuis la chaîne de requête
-$idArticle = $_GET['id'];
+$idArticle = (int) $_GET['id'];
 
 // On va chercher l'article correspondant
 $article = getOneArticle($idArticle);

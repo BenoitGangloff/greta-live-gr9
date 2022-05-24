@@ -139,20 +139,48 @@ function addArticle(string $title, string $abstract, string $content, string $im
     saveJSON(ARTICLES_FILENAME, $articles);
 }
 
+// /**
+//  * Récupère UN article à partir de son identifiant
+//  * @param string $idArticle - L'identifiant de l'article à récupérer
+//  * @return null|array - null si l'id n'existe pas, sinon retourne l'article
+//  */
+// function getOneArticle(string $idArticle): ?array
+// {
+//     $articles = getAllArticles();
+//     foreach ($articles as $article) {
+//         if ($article['id'] == $idArticle) {
+//             return $article;
+//         }
+//     }
+//     return null;
+// }
+
 /**
  * Récupère UN article à partir de son identifiant
  * @param string $idArticle - L'identifiant de l'article à récupérer
  * @return null|array - null si l'id n'existe pas, sinon retourne l'article
  */
-function getOneArticle(string $idArticle): ?array
+function getOneArticle(int $idArticle): ?array
 {
-    $articles = getAllArticles();
-    foreach ($articles as $article) {
-        if ($article['id'] == $idArticle) {
-            return $article;
-        }
-    }
-    return null;
+    // Connexoin à la base de données
+    $pdo = getPDOConnection();
+
+    // Préparation de la requête SQL
+    $sql = 'SELECT * 
+            FROM article
+            WHERE idArticle = ?';
+
+    // 1. Je prépare la requête
+    $pdoStatement = $pdo->prepare($sql);
+
+    // 2. Je l'exécute en lui donnant dans un tableau les valeurs qui vont remplacer les "?"
+    $pdoStatement->execute([$idArticle]);
+
+    // On récupère toujours UN SEUL résultat à la fin
+    $article = $pdoStatement->fetch();
+
+    // On retourne ce résultat
+    return $article;
 }
 
 /**
