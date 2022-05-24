@@ -15,21 +15,25 @@
     
 <section>
     <h3>Commentaires</h3>
-    <form action="article.php?id=<?=$idArticle;?>" method="POST">
-        <fieldset>
-            <legend>Poster un commentaire</legend>
-            <div>
-                <label for="content">Votre commentaire</label><br>
-                <textarea name="content" id="content"></textarea>
 
-                <!-- message d'erreur le cas échéant -->
-                <?php if (isset($errors['content'])): ?>
-                    <p><?=htmlspecialchars($errors['content']);?></p>
-                <?php endif; ?>
-            </div>
-        </fieldset>
-        <input type="submit" value="Enregistrer">
-    </form>
+    <!-- on affiche le formulaire pour poster un commentaire seulement si l'utilisateur est connecté -->
+    <?php if (isConnected()): ?>
+        <form action="article.php?id=<?=$idArticle;?>" method="POST">
+            <fieldset>
+                <legend>Poster un commentaire</legend>
+                <div>
+                    <label for="content">Votre commentaire</label><br>
+                    <textarea name="content" id="content"></textarea>
+
+                    <!-- message d'erreur le cas échéant -->
+                    <?php if (isset($errors['content'])): ?>
+                        <p><?=htmlspecialchars($errors['content']);?></p>
+                    <?php endif; ?>
+                </div>
+            </fieldset>
+            <input type="submit" value="Enregistrer">
+        </form>
+    <?php endif; ?>
 
     <h4>Les commentaires des internautes</h4>
     <?php if (!$comments): ?>

@@ -4,6 +4,7 @@
 session_start();
 
 // Inclusion des dépendances
+include '../app/config.php';
 include '../lib/functions.php';
 
 // Initialisations
@@ -23,7 +24,7 @@ if (!empty($_POST)) {
     if ($user) {
 
         // Enregistrement du user en session
-        registerUser($user['id'], $user['firstname'], $user['lastname'], $user['email'], $user['role']);
+        registerUser($user['idUser'], $user['firstname'], $user['lastname'], $user['email'], $user['role']);
     
         // Redirection pour le moment vers la page d'accueil du site
         header('Location: home.php');

@@ -43,7 +43,7 @@ if (!empty($_POST)) {
     if (empty($errors)) {
 
         // Pour l'instant on met l'id du user en dur... 
-        $idUser = 9;
+        $idUser = getUserId();
 
         // Appel de la fonction insertComment()
         insertComment($content, $idUser, $idArticle);

@@ -296,23 +296,23 @@ function getCommentsByArticleId(int $idArticle)
 ///////////////// USERS /////////////////
 /////////////////////////////////////////
 
-/**
- * Récupère l'intégralité des utilisateurs ou un tableau vide
- * @return array - Le tableau de users
- */
-function getAllUsers(): array
-{
-    // On récupère le contenu de fichier JSON
-    $users = loadJSON(USERS_FILENAME);
+// /**
+//  * Récupère l'intégralité des utilisateurs ou un tableau vide
+//  * @return array - Le tableau de users
+//  */
+// function getAllUsers(): array
+// {
+//     // On récupère le contenu de fichier JSON
+//     $users = loadJSON(USERS_FILENAME);
 
-    // Si on ne récupère rien (fichier inexistant ou vide)
-    if (!$users) {
-        return [];
-    }
+//     // Si on ne récupère rien (fichier inexistant ou vide)
+//     if (!$users) {
+//         return [];
+//     }
 
-    // Sinon on retourne directement notre tableau de users
-    return $users;
-}
+//     // Sinon on retourne directement notre tableau de users
+//     return $users;
+// }
 
 // /**
 //  * Retourne un utilisateur à partir de son email
@@ -349,7 +349,23 @@ function getAllUsers(): array
  */
 function getUserByEmail(string $email) 
 {
-    // @TODO
+    // Connexion à la base de données
+    $pdo = getPDOConnection();
+
+    // Préparation de la requête
+    $sql = 'SELECT *
+            FROM user
+            WHERE email = ?';
+
+    $pdoStatement = $pdo->prepare($sql);
+
+    // Exécution de la requête
+    $pdoStatement->execute([$email]);
+
+    // Récupération d'UN SEUL résultat : un seul utilisateur possède cet email
+    $user = $pdoStatement->fetch();
+
+    return $user;
 }
 
 /**
