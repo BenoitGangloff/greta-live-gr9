@@ -157,13 +157,13 @@ function addArticle(string $title, string $abstract, string $content, string $im
 
 /**
  * Récupère UN article à partir de son identifiant
- * @param string $idArticle - L'identifiant de l'article à récupérer
- * @return null|array - null si l'id n'existe pas, sinon retourne l'article
+ * @param int $idArticle - L'identifiant de l'article à récupérer
+ * @return bool|array - null si l'id n'existe pas, sinon retourne l'article
  */
-function getOneArticle(int $idArticle): ?array
+function getOneArticle(int $idArticle): bool|array
 {
     // Connexoin à la base de données
-    $pdo = getPDOConnection();
+    $pdo = getPDOConnection(); 
 
     // Préparation de la requête SQL
     $sql = 'SELECT * 
@@ -251,6 +251,48 @@ function deleteArticle(string $idArticle)
 }
 
 /////////////////////////////////////////
+////////////// COMMENTS /////////////////
+/////////////////////////////////////////
+function insertComment(string $content, int $idUser, int $idArticle)
+{
+    // Connexion à la base de données
+    $pdo = getPDOConnection();
+
+    // Préparation de la requête
+    $sql = 'INSERT INTO comment (content, fkUserId, fkArticleId, createdAt)
+            VALUES (?,?,?,NOW())';
+
+    $pdoStatement = $pdo->prepare($sql);
+
+    // Exécution de la requête
+    $pdoStatement->execute([$content, $idUser, $idArticle]);
+}
+
+function getCommentsByArticleId(int $idArticle)
+{
+    // Connexion à la base de données
+    $pdo = getPDOConnection();
+
+    // Préparation de la requête
+    $sql = 'SELECT content, C.createdAt, firstname, lastname
+            FROM comment AS C
+            INNER JOIN user AS U ON C.fkUserId = U.idUser
+            WHERE fkArticleId = ?
+            ORDER BY C.createdAt DESC';
+
+    $pdoStatement = $pdo->prepare($sql);
+
+    // Exécution de la requête
+    $pdoStatement->execute([$idArticle]);
+
+    // Récupération de TOUS les résultats (je peux avoir plusieurs commentaires sur un article)
+    $comments = $pdoStatement->fetchAll();
+
+    return $comments;
+}
+
+
+/////////////////////////////////////////
 ///////////////// USERS /////////////////
 /////////////////////////////////////////
 
@@ -272,6 +314,34 @@ function getAllUsers(): array
     return $users;
 }
 
+// /**
+//  * Retourne un utilisateur à partir de son email
+//  * @param string $email - L'email de l'utilisateur qu'on cherche
+//  * @return bool|array - false si l'utilisateur n'est pas trouvé, sinon le tableau associatif contenant les données de l'utilisateur
+//  */
+// function getUserByEmail(string $email) 
+// {
+//     // On récupère le contenu de fichier JSON
+//     $users = loadJSON(USERS_FILENAME);
+
+//     // Si le fichier n'existe pas ou est vide, forcément l'utilisateur n'existe pas
+//     if (!$users) {
+//         return false;
+//     }
+
+//     // On parcours le tableau d'utilisateurs...
+//     foreach ($users as $user) {
+
+//         // Si l'un des utilisateur possède l'email qu'on teste, on retourne true
+//         if ($user['email'] == $email) {
+//             return $user;
+//         }
+//     }
+
+//     // Si on a parcouru tout le tableau sans trouver l'utilisateur, c'est qu'il n'est pas présent
+//     return false;
+// }
+
 /**
  * Retourne un utilisateur à partir de son email
  * @param string $email - L'email de l'utilisateur qu'on cherche
@@ -279,25 +349,7 @@ function getAllUsers(): array
  */
 function getUserByEmail(string $email) 
 {
-    // On récupère le contenu de fichier JSON
-    $users = loadJSON(USERS_FILENAME);
-
-    // Si le fichier n'existe pas ou est vide, forcément l'utilisateur n'existe pas
-    if (!$users) {
-        return false;
-    }
-
-    // On parcours le tableau d'utilisateurs...
-    foreach ($users as $user) {
-
-        // Si l'un des utilisateur possède l'email qu'on teste, on retourne true
-        if ($user['email'] == $email) {
-            return $user;
-        }
-    }
-
-    // Si on a parcouru tout le tableau sans trouver l'utilisateur, c'est qu'il n'est pas présent
-    return false;
+    // @TODO
 }
 
 /**
