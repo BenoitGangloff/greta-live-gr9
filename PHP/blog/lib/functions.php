@@ -67,24 +67,24 @@ function saveJSON(string $filepath, $data)
 //     return $articles;
 // }
 
-/**
- * Création d'une connexion à la base de données
- */
-function getPDOConnection()
-{
-    // Connexion à la base de données
-    $dsn = 'mysql:dbname='.DB_NAME.';host='.DB_HOST.';charset=utf8'; // DSN : Data Source Name (informations de connexion à la BDD)
-    $user = DB_USER; // Utilisateur
-    $password = DB_PASS; // Mot de passe
-    $options = [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Pour afficher les erreurs SQL
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // Mode de récupération des résultats
-    ];
+// /**
+//  * Création d'une connexion à la base de données
+//  */
+// function getPDOConnection()
+// {
+//     // Connexion à la base de données
+//     $dsn = 'mysql:dbname='.DB_NAME.';host='.DB_HOST.';charset=utf8'; // DSN : Data Source Name (informations de connexion à la BDD)
+//     $user = DB_USER; // Utilisateur
+//     $password = DB_PASS; // Mot de passe
+//     $options = [
+//         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Pour afficher les erreurs SQL
+//         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC // Mode de récupération des résultats
+//     ];
 
-    $pdo = new PDO($dsn, $user, $password, $options); // Création d'un objet de la classe PDO
+//     $pdo = new PDO($dsn, $user, $password, $options); // Création d'un objet de la classe PDO
 
-    return $pdo;
-}
+//     return $pdo;
+// }
 
 // /**
 //  * Récupère l'intégralité des articles ou un tableau vide
@@ -106,16 +106,16 @@ function getPDOConnection()
 //     return $articles;
 // }
 
-function getAllArticles(): array
-{
-    $sql = 'SELECT *
-            FROM article AS A
-            ORDER BY A.createdAt DESC';
+// function getAllArticles(): array
+// {
+//     $sql = 'SELECT *
+//             FROM article AS A
+//             ORDER BY A.createdAt DESC';
 
-    $db = new Database();
+//     $db = new Database();
 
-    return $db->getAllResults($sql);
-}
+//     return $db->getAllResults($sql);
+// }
 
 /**
  * Ajoute un article
@@ -166,33 +166,33 @@ function addArticle(string $title, string $abstract, string $content, string $im
 //     return null;
 // }
 
-/**
- * Récupère UN article à partir de son identifiant
- * @param int $idArticle - L'identifiant de l'article à récupérer
- * @return bool|array - null si l'id n'existe pas, sinon retourne l'article
- */
-function getOneArticle(int $idArticle): bool|array
-{
-    // Connexoin à la base de données
-    $pdo = getPDOConnection(); 
+// /**
+//  * Récupère UN article à partir de son identifiant
+//  * @param int $idArticle - L'identifiant de l'article à récupérer
+//  * @return bool|array - null si l'id n'existe pas, sinon retourne l'article
+//  */
+// function getOneArticle(int $idArticle): bool|array
+// {
+//     // Connexoin à la base de données
+//     $pdo = getPDOConnection(); 
 
-    // Préparation de la requête SQL
-    $sql = 'SELECT * 
-            FROM article
-            WHERE idArticle = ?';
+//     // Préparation de la requête SQL
+//     $sql = 'SELECT * 
+//             FROM article
+//             WHERE idArticle = ?';
 
-    // 1. Je prépare la requête
-    $pdoStatement = $pdo->prepare($sql);
+//     // 1. Je prépare la requête
+//     $pdoStatement = $pdo->prepare($sql);
 
-    // 2. Je l'exécute en lui donnant dans un tableau les valeurs qui vont remplacer les "?"
-    $pdoStatement->execute([$idArticle]);
+//     // 2. Je l'exécute en lui donnant dans un tableau les valeurs qui vont remplacer les "?"
+//     $pdoStatement->execute([$idArticle]);
 
-    // On récupère toujours UN SEUL résultat à la fin
-    $article = $pdoStatement->fetch();
+//     // On récupère toujours UN SEUL résultat à la fin
+//     $article = $pdoStatement->fetch();
 
-    // On retourne ce résultat
-    return $article;
-}
+//     // On retourne ce résultat
+//     return $article;
+// }
 
 /**
  * Modifie un article
@@ -264,43 +264,43 @@ function deleteArticle(string $idArticle)
 /////////////////////////////////////////
 ////////////// COMMENTS /////////////////
 /////////////////////////////////////////
-function insertComment(string $content, int $idUser, int $idArticle)
-{
-    // Connexion à la base de données
-    $pdo = getPDOConnection();
+// function insertComment(string $content, int $idUser, int $idArticle)
+// {
+//     // Connexion à la base de données
+//     $pdo = getPDOConnection();
 
-    // Préparation de la requête
-    $sql = 'INSERT INTO comment (content, fkUserId, fkArticleId, createdAt)
-            VALUES (?,?,?,NOW())';
+//     // Préparation de la requête
+//     $sql = 'INSERT INTO comment (content, fkUserId, fkArticleId, createdAt)
+//             VALUES (?,?,?,NOW())';
 
-    $pdoStatement = $pdo->prepare($sql);
+//     $pdoStatement = $pdo->prepare($sql);
 
-    // Exécution de la requête
-    $pdoStatement->execute([$content, $idUser, $idArticle]);
-}
+//     // Exécution de la requête
+//     $pdoStatement->execute([$content, $idUser, $idArticle]);
+// }
 
-function getCommentsByArticleId(int $idArticle)
-{
-    // Connexion à la base de données
-    $pdo = getPDOConnection();
+// function getCommentsByArticleId(int $idArticle)
+// {
+//     // Connexion à la base de données
+//     $pdo = getPDOConnection();
 
-    // Préparation de la requête
-    $sql = 'SELECT content, C.createdAt, firstname, lastname
-            FROM comment AS C
-            INNER JOIN user AS U ON C.fkUserId = U.idUser
-            WHERE fkArticleId = ?
-            ORDER BY C.createdAt DESC';
+//     // Préparation de la requête
+//     $sql = 'SELECT content, C.createdAt, firstname, lastname
+//             FROM comment AS C
+//             INNER JOIN user AS U ON C.fkUserId = U.idUser
+//             WHERE fkArticleId = ?
+//             ORDER BY C.createdAt DESC';
 
-    $pdoStatement = $pdo->prepare($sql);
+//     $pdoStatement = $pdo->prepare($sql);
 
-    // Exécution de la requête
-    $pdoStatement->execute([$idArticle]);
+//     // Exécution de la requête
+//     $pdoStatement->execute([$idArticle]);
 
-    // Récupération de TOUS les résultats (je peux avoir plusieurs commentaires sur un article)
-    $comments = $pdoStatement->fetchAll();
+//     // Récupération de TOUS les résultats (je peux avoir plusieurs commentaires sur un article)
+//     $comments = $pdoStatement->fetchAll();
 
-    return $comments;
-}
+//     return $comments;
+// }
 
 
 /////////////////////////////////////////

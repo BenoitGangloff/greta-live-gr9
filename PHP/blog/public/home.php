@@ -6,10 +6,12 @@ session_start();
 // Inclusion des dépendances
 include '../app/config.php';
 include '../src/Core/Database.php';
+include '../src/Model/ArticleModel.php';
 include '../lib/functions.php';
 
 // Traitements : récupérer les articles
-$articles = getAllArticles();
+$articleModel = new ArticleModel();
+$articles = $articleModel->getAllArticles();
 
 // Affichage : inclusion du template
 $template = 'home';

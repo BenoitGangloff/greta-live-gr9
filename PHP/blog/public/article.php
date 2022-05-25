@@ -5,6 +5,9 @@ session_start();
 
 // Inclusion des dépendances
 include '../app/config.php';
+include '../src/Core/Database.php';
+include '../src/Model/ArticleModel.php';
+include '../src/Model/CommentModel.php';
 include '../lib/functions.php';
 
 ////////////////////////////////////////////////
@@ -23,6 +26,9 @@ if (!array_key_exists('id', $_GET) || !$_GET['id'] || !ctype_digit($_GET['id']))
 // On récupère l'id de l'article à afficher depuis la chaîne de requête
 $idArticle = (int) $_GET['id'];
 
+// Création des modèles
+$commentModel = new CommentModel();
+$articleModel = new ArticleModel();
 
 ////////////////////////////////////////////////
 // Gestion du formulaire d'ajout de commentaires
@@ -46,7 +52,7 @@ if (!empty($_POST)) {
         $idUser = getUserId();
 
         // Appel de la fonction insertComment()
-        insertComment($content, $idUser, $idArticle);
+        $commentModel->insertComment($content, $idUser, $idArticle);
 
         // Redirection pour perdre les données en POST et revenir en GET pour ne pas insérer plusieurs fois le même commentaire si l'internaute fait F5
         header('Location: article.php?id=' . $idArticle);
@@ -60,7 +66,7 @@ if (!empty($_POST)) {
 ////////////////////////////////////////////////
 
 // On va chercher l'article correspondant
-$article = getOneArticle($idArticle);
+$article = $articleModel->getOneArticle($idArticle);
 
 // On vérifie qu'on a bien récupéré un article, sinon => 404
 if (!$article) {
@@ -71,7 +77,7 @@ if (!$article) {
 }
 
 // Aller chercher les commentaires associés à l'article
-$comments = getCommentsByArticleId($idArticle);
+$comments = $commentModel->getCommentsByArticleId($idArticle);
 
 // Affichage : inclusion du fichier de template
 $template = 'article';
