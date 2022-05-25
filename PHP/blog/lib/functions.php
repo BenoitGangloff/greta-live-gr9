@@ -86,24 +86,35 @@ function getPDOConnection()
     return $pdo;
 }
 
-/**
- * Récupère l'intégralité des articles ou un tableau vide
- * @return array - Le tableau d'articles
- */
+// /**
+//  * Récupère l'intégralité des articles ou un tableau vide
+//  * @return array - Le tableau d'articles
+//  */
+// function getAllArticles(): array
+// {
+//     // Connexion à la base de données
+//     $pdo = getPDOConnection();
+
+//     // Exécution de la requête de sélection des articles
+//     $sql = 'SELECT * FROM article';
+//     $pdoStatement = $pdo->query($sql);
+
+//     // Récupération des résultats de la requête et retour
+//     $articles = $pdoStatement->fetchAll();
+
+//     // On retourne les articles sélectionnés
+//     return $articles;
+// }
+
 function getAllArticles(): array
 {
-    // Connexion à la base de données
-    $pdo = getPDOConnection();
+    $sql = 'SELECT *
+            FROM article AS A
+            ORDER BY A.createdAt DESC';
 
-    // Exécution de la requête de sélection des articles
-    $sql = 'SELECT * FROM article';
-    $pdoStatement = $pdo->query($sql);
+    $db = new Database();
 
-    // Récupération des résultats de la requête et retour
-    $articles = $pdoStatement->fetchAll();
-
-    // On retourne les articles sélectionnés
-    return $articles;
+    return $db->getAllResults($sql);
 }
 
 /**
