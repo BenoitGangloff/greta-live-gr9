@@ -37,6 +37,13 @@ $errors = [];
 
 if (!empty($_POST)) {
 
+    // Si l'utilisateur n'est pas connecté, on le redirige vers la connexion
+    $idUser = getUserId();
+    if ($idUser == null) {
+        header('Location: login.php');
+        exit;
+    }
+
     // Récupération des données du formulaire
     $content = trim($_POST['content']);
 
@@ -47,9 +54,6 @@ if (!empty($_POST)) {
 
     // S'il n'y a pas d'erreurs
     if (empty($errors)) {
-
-        // Pour l'instant on met l'id du user en dur... 
-        $idUser = getUserId();
 
         // Appel de la fonction insertComment()
         $commentModel->insertComment($content, $idUser, $idArticle);
