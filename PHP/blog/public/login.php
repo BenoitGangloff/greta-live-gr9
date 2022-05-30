@@ -5,7 +5,12 @@ session_start();
 
 // Inclusion des dépendances
 include '../app/config.php';
+include '../src/Core/Database.php';
+include '../src/Core/AbstractModel.php';
+include '../src/Model/UserModel.php';
 include '../lib/functions.php';
+
+// @TODO je ne devrais pas être ici si je suis connecté
 
 // Initialisations
 $email = '';

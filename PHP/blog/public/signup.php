@@ -4,6 +4,10 @@
 session_start();
 
 // Inclusion des dépendances
+include '../app/config.php';
+include '../src/Core/Database.php';
+include '../src/Core/AbstractModel.php';
+include '../src/Model/UserModel.php';
 include '../lib/functions.php';
 
 // Initialisations
@@ -11,6 +15,11 @@ $errors = [];
 $firstname = '';
 $lastname = '';
 $email = '';
+
+// Création de l'objet UserModel
+$userModel = new UserModel();
+
+// @TODO je ne devrais pas être ici si je suis connecté
 
 // Si le formulaire est soumis...
 if (!empty($_POST)) {
@@ -37,7 +46,7 @@ if (!empty($_POST)) {
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'Email invalide';
     }
-    elseif (getUserByEmail($email)) {
+    elseif ($userModel->getUserByEmail($email)) {
         $errors['email'] = 'Un compte existe déjà avec cet email';
     }
 
@@ -55,7 +64,8 @@ if (!empty($_POST)) {
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
         // On enregistre l'article
-        addUser($firstname, $lastname, $email, $hash);
+        $userModel->addUser($firstname, $lastname, $email, 'USER', $hash);
+        // @TODO stocker 'USER' dans une constante de configuration 
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
         header('Location: home.php');

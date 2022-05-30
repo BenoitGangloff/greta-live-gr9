@@ -4,6 +4,10 @@
 session_start();
 
 // Inclusion des dépendances
+include '../app/config.php';
+include '../src/Core/Database.php';
+include '../src/Core/AbstractModel.php';
+include '../src/Model/ArticleModel.php';
 include '../lib/functions.php';
 
 // Vérification du rôle
@@ -14,7 +18,8 @@ if (!hasRole(ROLE_ADMIN)) {
 }
 
 // Traitements : récupérer les articles
-$articles = getAllArticles();
+$articleModel = new ArticleModel();
+$articles = $articleModel->getAllArticles();
 
 // Affichage : inclusion du fichier de template
 $template = 'admin';

@@ -4,6 +4,10 @@
 session_start();
 
 // Inclusion des dépendances
+include '../app/config.php';
+include '../src/Core/Database.php';
+include '../src/Core/AbstractModel.php';
+include '../src/Model/ArticleModel.php';
 include '../lib/functions.php';
 
 // Vérification du rôle
@@ -30,7 +34,8 @@ if (!array_key_exists('id', $_GET) || !$_GET['id']) {
 $idArticle = $_GET['id'];
 
 // On va chercher l'article correspondant
-$article = getOneArticle($idArticle);
+$articleModel = new ArticleModel();
+$article = $articleModel->getOneArticle($idArticle);
 
 // On vérifie qu'on a bien récupéré un article, sinon => 404
 if (!$article) {
@@ -69,7 +74,7 @@ if (!empty($_POST)) {
     if (empty($errors)) {
 
         // On modifie l'article
-        editArticle($title, $abstract, $content, $image, $idArticle);
+        $articleModel->editArticle($title, $abstract, $content, $image, $idArticle);
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
         header('Location: admin.php');
