@@ -2,6 +2,21 @@
 
 class Database {
 
+    private PDO $pdo;
+
+    static private int $countPDO = 0;
+
+    public function __construct()
+    {
+        $this->pdo = $this->getPDOConnection();
+        self::$countPDO++;
+    }
+
+    static public function getCountPDO()
+    {
+        return self::$countPDO;
+    } 
+
     /**
      * Création d'une connexion PDO à la base de données
      */
@@ -29,11 +44,8 @@ class Database {
      */
     public function executeQuery(string $sql, array $values = []): PDOStatement
     {
-        // Connexion PDO
-        $pdo = $this->getPDOConnection();
-
         // Préparation 
-        $pdoStatement = $pdo->prepare($sql);
+        $pdoStatement = $this->pdo->prepare($sql);
 
         // Exécution 
         $pdoStatement->execute($values);

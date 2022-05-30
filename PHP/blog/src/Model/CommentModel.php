@@ -1,6 +1,6 @@
 <?php 
 
-class CommentModel {
+class CommentModel extends AbstractModel {
 
     /**
      * Insère un nouveau commentaire dans la base de données
@@ -11,8 +11,7 @@ class CommentModel {
         $sql = 'INSERT INTO comment (content, fkUserId, fkArticleId, createdAt)
                 VALUES (?,?,?,NOW())';
 
-        $db = new Database();
-        $db->executeQuery($sql, [$content, $idUser, $idArticle]);
+        $this->db->executeQuery($sql, [$content, $idUser, $idArticle]);
     }
 
     /**
@@ -27,8 +26,7 @@ class CommentModel {
                 WHERE fkArticleId = ?
                 ORDER BY C.createdAt DESC';
 
-        $db = new Database();
-        return $db->getAllResults($sql, [$idArticle]);
+        return $this->db->getAllResults($sql, [$idArticle]);
     }
 
 

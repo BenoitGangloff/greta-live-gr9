@@ -1,6 +1,6 @@
 <?php 
 
-class ArticleModel {
+class ArticleModel extends AbstractModel {
 
     /**
      * Récupère tous les articles triés par date de création décroissante
@@ -11,9 +11,7 @@ class ArticleModel {
                 FROM article AS A
                 ORDER BY A.createdAt DESC';
 
-        $db = new Database();
-
-        return $db->getAllResults($sql);
+        return $this->db->getAllResults($sql);
     }
 
     /**
@@ -27,9 +25,7 @@ class ArticleModel {
                 FROM article AS A
                 WHERE idArticle = ?';
 
-        $db = new Database();
-
-        return $db->getOneResult($sql, [$idArticle]);
+        return $this->db->getOneResult($sql, [$idArticle]);
     }
 
     /**
@@ -45,8 +41,7 @@ class ArticleModel {
         $sql = 'INSERT INTO article (title, content, abstract, image, createdAt)
                 VALUES (?,?,?,?,NOW())';
 
-        $db = new Database();
-        $db->executeQuery($sql, [$title, $content, $abstract, $image]);
+        $this->db->executeQuery($sql, [$title, $content, $abstract, $image]);
     }
 
     /**
@@ -63,8 +58,7 @@ class ArticleModel {
                 SET title = ?, content = ?, abstract = ?, image = ?
                 WHERE idArticle = ?';
 
-        $db = new Database();
-        $db->executeQuery($sql, [$title, $content, $abstract, $image, $idArticle]);
+        $this->db->executeQuery($sql, [$title, $content, $abstract, $image, $idArticle]);
     }
 
     /**
@@ -76,8 +70,7 @@ class ArticleModel {
         $sql = 'DELETE FROM article
                 WHERE idArticle = ?';
 
-        $db = new Database();
-        $db->executeQuery($sql, [$idArticle]);
+        $this->db->executeQuery($sql, [$idArticle]);
     }
 
 }
