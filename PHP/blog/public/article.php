@@ -84,9 +84,6 @@ if (!$article) {
 // Aller chercher les commentaires associés à l'article
 $comments = $commentModel->getCommentsByArticleId($idArticle);
 
-// Test du nombre d'instances de PDO
-var_dump(Database::getCountPDO());
-
 // Affichage : inclusion du fichier de template
 $template = 'article';
 include '../templates/base.phtml';

@@ -1,5 +1,8 @@
 <?php
 
+// Inclusion du fichier d'autoload de composer
+require '../vendor/autoload.php';
+
 // On démarre la session pour être certain qu'elle est démarrée
 session_start();
 
@@ -13,9 +16,6 @@ include '../lib/functions.php';
 // Traitements : récupérer les articles
 $articleModel = new ArticleModel();
 $articles = $articleModel->getAllArticles();
-
-// Test du nombre d'instances de PDO
-var_dump(Database::getCountPDO());
 
 // Affichage : inclusion du template
 $template = 'home';
