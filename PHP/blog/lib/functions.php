@@ -1,14 +1,23 @@
 <?php 
 
 // Constantes
-const ARTICLES_FILENAME = '../data/articles.json';
-const USERS_FILENAME = '../data/users.json'; 
 const ROLE_USER = 'USER';
 const ROLE_ADMIN = 'ADMIN';
 
 /////////////////////////////////////////
 ///////// FONCTIONS UTILITAIRES /////////
 /////////////////////////////////////////
+
+/**
+ * Construit l'URL d'une page à partir du nom de la page et d'un tableau de paramètres
+ * @param string $page Le nom de la page dont on veut construire l'URL
+ * @param array $params Un tableau associatif de paramètres à ajouter dans la chaîne de requête
+ * @return string L'URL de la page avec les éventuels paramètres
+ */
+function buildUrl(string $page, array $params = []): string
+{
+    return 'index.php?' . http_build_query(['page' => $page, ...$params]);
+}
 
 /**
  * Vérifie les identifiants d el'utilisateur

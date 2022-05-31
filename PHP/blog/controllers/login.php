@@ -1,15 +1,5 @@
 <?php 
 
-// On démarre la session pour être certain qu'elle est démarrée
-session_start();
-
-// Inclusion des dépendances
-include '../app/config.php';
-include '../src/Core/Database.php';
-include '../src/Core/AbstractModel.php';
-include '../src/Model/UserModel.php';
-include '../lib/functions.php';
-
 // @TODO je ne devrais pas être ici si je suis connecté
 
 // Initialisations
@@ -32,7 +22,7 @@ if (!empty($_POST)) {
         registerUser($user['idUser'], $user['firstname'], $user['lastname'], $user['email'], $user['role']);
     
         // Redirection pour le moment vers la page d'accueil du site
-        header('Location: home.php');
+        header('Location: ' . buildUrl('home'));
         exit;
     } 
         

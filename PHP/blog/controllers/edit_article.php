@@ -1,15 +1,5 @@
 <?php
 
-// On démarre la session pour être certain qu'elle est démarrée
-session_start();
-
-// Inclusion des dépendances
-include '../app/config.php';
-include '../src/Core/Database.php';
-include '../src/Core/AbstractModel.php';
-include '../src/Model/ArticleModel.php';
-include '../lib/functions.php';
-
 // Vérification du rôle
 if (!hasRole(ROLE_ADMIN)) {
     http_response_code(403);
@@ -77,7 +67,7 @@ if (!empty($_POST)) {
         $articleModel->editArticle($title, $abstract, $content, $image, $idArticle);
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
-        header('Location: admin.php');
+        header('Location: ' . buildUrl('admin'));
         exit;
     }
 }

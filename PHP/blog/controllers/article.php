@@ -1,16 +1,5 @@
 <?php
 
-// On démarre la session pour être certain qu'elle est démarrée
-session_start();
-
-// Inclusion des dépendances
-include '../app/config.php';
-include '../src/Core/Database.php';
-include '../src/Core/AbstractModel.php';
-include '../src/Model/ArticleModel.php';
-include '../src/Model/CommentModel.php';
-include '../lib/functions.php';
-
 ////////////////////////////////////////////////
 // Récupération de l'id de l'article dans l'URL
 ////////////////////////////////////////////////
@@ -41,7 +30,7 @@ if (!empty($_POST)) {
     // Si l'utilisateur n'est pas connecté, on le redirige vers la connexion
     $idUser = getUserId();
     if ($idUser == null) {
-        header('Location: login.php');
+        header('Location: ' . buildUrl('login'));
         exit;
     }
 
@@ -60,7 +49,7 @@ if (!empty($_POST)) {
         $commentModel->insertComment($content, $idUser, $idArticle);
 
         // Redirection pour perdre les données en POST et revenir en GET pour ne pas insérer plusieurs fois le même commentaire si l'internaute fait F5
-        header('Location: article.php?id=' . $idArticle);
+        header('Location: ' . buildUrl('article', ['id' => $idArticle]));
         exit;
     }
 }

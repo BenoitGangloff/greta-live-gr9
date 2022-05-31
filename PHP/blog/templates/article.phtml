@@ -18,7 +18,7 @@
 
     <!-- on affiche le formulaire pour poster un commentaire seulement si l'utilisateur est connecté -->
     <?php if (isConnected()): ?>
-        <form action="article.php?id=<?=$idArticle;?>" method="POST">
+        <form action="<?=buildUrl('article', ['id' => $idArticle]);?>" method="POST">
             <fieldset>
                 <legend>Poster un commentaire</legend>
                 <div>
@@ -34,7 +34,7 @@
             <input type="submit" value="Enregistrer">
         </form>
     <?php else: ?>
-        <p>Pour poster un commentaire, <a href="login.php">connectez-vous</a> ou <a href="signup.php">créez un compte</a> !</p>
+        <p>Pour poster un commentaire, <a href="<?=buildUrl('signin');?>">connectez-vous</a> ou <a href="<?=buildUrl('signup');?>">créez un compte</a> !</p>
     <?php endif; ?>
 
     <h4>Les commentaires des internautes</h4>

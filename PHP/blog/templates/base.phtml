@@ -10,13 +10,13 @@
     <header>
         <h1>Mon super blog !</h1>
         <nav>
-            <a href="home.php">Accueil</a>
+            <a href="<?=buildUrl('home');?>">Accueil</a>
             <?php if (isConnected()): ?>
                 <span><?=htmlspecialchars(getUserFirstname());?> <?=htmlspecialchars(getUserLastname());?></span>
-                <a href="logout.php">Déconnexion</a>
+                <a href="<?=buildUrl('bye');?>">Déconnexion</a>
             <?php else: ?>
-                <a href="login.php">Connexion</a>
-                <a href="signup.php">Créer un compte</a>
+                <a href="<?=buildUrl('signin');?>">Connexion</a>
+                <a href="<?=buildUrl('signup');?>">Créer un compte</a>
             <?php endif; ?>
         </nav>
     </header>

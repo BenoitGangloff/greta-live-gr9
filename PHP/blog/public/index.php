@@ -33,11 +33,14 @@ $routes = include '../app/routes.php';
 $page = $_GET['page'] ?? 'home'; // ?? est l'opérateur de fusion NULL : https://www.php.net/manual/fr/language.operators.comparison.php
 
 // Routing : appeler un contrôleur spécifique à la page qu'on souhaite afficher en fonction de l'information contenue dans l'URL
-// switch($page) {
-//     case 'home':
-//         include '../controllers/home.php';
-//         break;
 
-// }
+// Si la page n'existe pas on fait une erreur 404
+if (!array_key_exists($page, $routes)) {
+    http_response_code(404);
+    echo 'Page introuvable';
+    exit;
+}
 
-// @TODO aller chercher dans le tableau de routes la route qui correspond à la valeur de $page
+// On va chercher le contrôleur associé à la page
+$controllerFile = $routes[$page];
+include '../controllers/' . $controllerFile;

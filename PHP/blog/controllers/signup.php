@@ -1,15 +1,5 @@
 <?php 
 
-// On démarre la session pour être certain qu'elle est démarrée
-session_start();
-
-// Inclusion des dépendances
-include '../app/config.php';
-include '../src/Core/Database.php';
-include '../src/Core/AbstractModel.php';
-include '../src/Model/UserModel.php';
-include '../lib/functions.php';
-
 // Initialisations
 $errors = [];
 $firstname = '';
@@ -68,7 +58,7 @@ if (!empty($_POST)) {
         // @TODO stocker 'USER' dans une constante de configuration 
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
-        header('Location: home.php');
+        header('Location: ' . buildUrl('home'));
         exit;
     }
 }

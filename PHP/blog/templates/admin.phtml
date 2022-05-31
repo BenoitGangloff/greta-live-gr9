@@ -18,10 +18,10 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <a href="edit_article.php?id=<?=htmlspecialchars($article['idArticle']);?>"><i class="fa-solid fa-pen-to-square"></i> Modifier</a>
+                    <a href="<?=buildUrl('editArt', ['id' => intval($article['idArticle'])]);?>"><i class="fa-solid fa-pen-to-square"></i> Modifier</a>
                     <a class="delete-article-button" 
-                       href="delete_article.php?id=<?=htmlspecialchars($article['idArticle']);?>"
-                       data-ajax="delete_article_ajax.php?id=<?=htmlspecialchars($article['idArticle']);?>"><i class="fa-solid fa-trash-can"></i> Supprimer</a>
+                       href="<?=buildUrl('delArt', ['id' => intval($article['idArticle'])]);?>"
+                       data-ajax="<?=buildUrl('delArtAjax', ['id' => intval($article['idArticle'])]);?>"><i class="fa-solid fa-trash-can"></i> Supprimer</a>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -1,11 +1,5 @@
 <?php 
 
-// On démarre la session pour être certain qu'elle est démarrée
-session_start();
-
-// Inclusion des dépendances 
-include '../lib/functions.php';
-
 // Vérification du rôle
 if (!hasRole(ROLE_ADMIN)) {
     http_response_code(403);
@@ -37,11 +31,14 @@ if (!empty($_POST)) {
     // Si tout est OK (pas d'erreurs)...
     if (empty($errors)) {
 
+        $idUser = getUserId();
+
         // On enregistre l'article
-        addArticle($title, $abstract, $content, $image);
+        $articleModel = new ArticleModel();
+        $articleModel->addArticle($title, $abstract, $content, $image, $idUser);
 
         // On redirige l'internaute (pour l'instant vers une page de confirmation)
-        header('Location: admin.php');
+        header('Location: ' . buildUrl('admin'));
         exit;
     }
 }
